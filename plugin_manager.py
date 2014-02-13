@@ -64,6 +64,8 @@ class plugin_item(QWidget,Ui_listitem):
         self.zp.extractall(path=self.main.main.user_loc)
         try:
             shutil.rmtree(os.path.join(self.main.main.user_loc,self.plugin['manifest']['module']))
+        except:
+            pass
         os.rename(os.path.join(self.main.main.user_loc,self.zp.namelist()[0].rstrip('/')),\
                   os.path.join(self.main.main.user_loc,self.plugin['manifest']['module']))
 
