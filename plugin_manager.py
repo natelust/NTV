@@ -6,6 +6,7 @@ from zipfile import ZipFile
 from io import BytesIO
 import urllib.request as urlr
 import json
+import shutil
 
 
 from .plugman import Ui_PluginManager
@@ -62,9 +63,11 @@ class plugin_item(QWidget,Ui_listitem):
     def install(self):
         self.zp.extractall(path=self.main.main.user_loc)
         try:
-            os.remove(os.path.join(self.main.main.user_loc,self.plugin['manifest']['module']))
+            shutil.rmtree(os.path.join(self.main.main.user_loc,self.plugin['manifest']['module']))
         os.rename(os.path.join(self.main.main.user_loc,self.zp.namelist()[0].rstrip('/')),\
                   os.path.join(self.main.main.user_loc,self.plugin['manifest']['module']))
+
+
 
 
 
