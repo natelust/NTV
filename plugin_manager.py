@@ -60,6 +60,8 @@ class plugin_item(QWidget,Ui_listitem):
         self.connect(self.updatebutton,SIGNAL('clicked()'),self.install)
     def install(self):
         self.zp.extractall(path=self.main.main.user_loc)
+        os.rename(os.path.join(self.main.main.user_loc,self.zp.namelist()[0].rstrip('/')),\
+                  os.path.join(self.main.main.user_loc,self.plugin['manifest']['module']))
 
 
 
