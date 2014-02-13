@@ -1,0 +1,6 @@
+{"type":"core",
+"name":"Plugin Manager",
+"url":"",
+"description":"This is the plugin manager. It allows updating of existing plugins and installation of new ones",
+"version":0.1
+}
