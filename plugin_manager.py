@@ -23,8 +23,8 @@ class myThread(QThread):
         self.url = url
     def run(self):
         try:
-            web = urlr.urlopen(url)
-            by = BytesIO(self.url.read())
+            web = urlr.urlopen(self.url)
+            by = BytesIO(web.read())
             zp = ZipFile(by)
             self.parent.zp = zp
             for item in zp.namelist():
@@ -34,8 +34,9 @@ class myThread(QThread):
             ld = json.loads(rd.decode())
             version = ld['version']
             self.parent.latestversion.clear()
-            self.parent.setText(str(version))
-            self.parent.updatebutton.enabled(True)
+            self.parent.latestversion.setText(str(version))
+            self.parent.updatebutton.setEnabled(True)
+            print('here')
         except:
             self.parent.latestversion.clear()
             self.parent.latestversion.setFrameStyle(QFrame.StyledPanel|QFrame.Raised)
