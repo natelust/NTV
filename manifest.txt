@@ -1,0 +1,8 @@
+{"type":"core",
+"name":"Preferance Box",
+"module":"pref_box",
+"url":"",
+"description":"A plugin to manage the user preferences of the NTV application",
+"version":0.1,
+"ntv_version":0.4
+}

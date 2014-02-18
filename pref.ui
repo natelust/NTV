@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>prefs</class>
+ <widget class="QDialog" name="prefs">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>215</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Preference</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Preview Size</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Default cut size</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Plot Origin</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Dialog Box Behaivor</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0" colspan="2">
+        <widget class="QRadioButton" name="preview20">
+         <property name="text">
+          <string>20</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string>buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QRadioButton" name="preview5">
+         <property name="text">
+          <string>5</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string>buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QLineEdit" name="cutsizeset">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>3</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QRadioButton" name="plotup">
+         <property name="text">
+          <string>Upper</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string>buttonGroup_2</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="2" column="3" colspan="2">
+        <widget class="QRadioButton" name="plotdown">
+         <property name="text">
+          <string>Lower</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string>buttonGroup_2</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="3">
+        <widget class="QRadioButton" name="overplot">
+         <property name="text">
+          <string>Overplot</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string>buttonGroup_3</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="3" column="3" colspan="2">
+        <widget class="QRadioButton" name="multi">
+         <property name="text">
+          <string>Multi Windows</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string>buttonGroup_3</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="0" column="2" colspan="2">
+        <widget class="QRadioButton" name="preview10">
+         <property name="text">
+          <string>10</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string>buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="ok_sync">
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Ok</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_3"/>
+ </buttongroups>
+</ui>
