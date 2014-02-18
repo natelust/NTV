@@ -21,6 +21,9 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QTabWidget" name="tabWidget">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
@@ -110,38 +113,6 @@
               <widget class="QPushButton" name="install_button">
                <property name="text">
                 <string>Go</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="tab_3">
-        <attribute name="title">
-         <string>Submit</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_7">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item alignment="Qt::AlignBottom">
-            <widget class="QLabel" name="label_2">
-             <property name="text">
-              <string>Submit a URL for a plugin. See Wiki for guidelines</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QLineEdit" name="submit_location"/>
-             </item>
-             <item>
-              <widget class="QPushButton" name="submit_button">
-               <property name="text">
-                <string>Submit</string>
                </property>
               </widget>
              </item>

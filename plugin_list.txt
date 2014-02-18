@@ -1,0 +1,25 @@
+{"name":"Header Viewer",
+"url":"",
+"description":"Creates a view of the header for a fits file"
+}
+|
+{"name":"Levels",
+"url":"",
+"description":"This plugin shows a brightness histogram, and allows setting of black and white points"
+}
+|
+{"name":"Plugin Manager",
+"url":"https://github.com/natelust/plugin_manager/zipball/master",
+"description":"This is the plugin manager. It allows updating of existing plugins and installation of new ones"
+}
+|
+{"name":"Preferance Box",
+"url":"",
+"description":"A plugin to manage the user preferences of the NTV application"
+}
+|
+{
+"name":"Example Plugin",
+"url":"https://github.com/natelust/example/archive/master.zip",
+"description":"This plugin is a demonstration on how to create a plugin"
+}

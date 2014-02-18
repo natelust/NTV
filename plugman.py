@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'plugman.ui'
 #
-# Created: Mon Feb 10 01:55:00 2014
+# Created: Mon Feb 17 14:33:39 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -33,6 +33,7 @@ class Ui_PluginManager(object):
         self.verticalLayout = QtGui.QVBoxLayout()
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.tabWidget = QtGui.QTabWidget(PluginManager)
+        self.tabWidget.setEnabled(True)
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.tab = QtGui.QWidget()
         self.tab.setObjectName(_fromUtf8("tab"))
@@ -97,26 +98,6 @@ class Ui_PluginManager(object):
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.verticalLayout_6.addLayout(self.verticalLayout_2)
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
-        self.tab_3 = QtGui.QWidget()
-        self.tab_3.setObjectName(_fromUtf8("tab_3"))
-        self.verticalLayout_7 = QtGui.QVBoxLayout(self.tab_3)
-        self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
-        self.verticalLayout_3 = QtGui.QVBoxLayout()
-        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
-        self.label_2 = QtGui.QLabel(self.tab_3)
-        self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.verticalLayout_3.addWidget(self.label_2)
-        self.horizontalLayout_2 = QtGui.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        self.submit_location = QtGui.QLineEdit(self.tab_3)
-        self.submit_location.setObjectName(_fromUtf8("submit_location"))
-        self.horizontalLayout_2.addWidget(self.submit_location)
-        self.submit_button = QtGui.QPushButton(self.tab_3)
-        self.submit_button.setObjectName(_fromUtf8("submit_button"))
-        self.horizontalLayout_2.addWidget(self.submit_button)
-        self.verticalLayout_3.addLayout(self.horizontalLayout_2)
-        self.verticalLayout_7.addLayout(self.verticalLayout_3)
-        self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
         self.verticalLayout.addWidget(self.tabWidget)
         self.accept = QtGui.QPushButton(PluginManager)
         self.accept.setMaximumSize(QtCore.QSize(100, 16777215))
@@ -134,8 +115,5 @@ class Ui_PluginManager(object):
         self.label.setText(_translate("PluginManager", "Install Plugin from URL", None))
         self.install_button.setText(_translate("PluginManager", "Go", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("PluginManager", "Available", None))
-        self.label_2.setText(_translate("PluginManager", "Submit a URL for a plugin. See Wiki for guidelines", None))
-        self.submit_button.setText(_translate("PluginManager", "Submit", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("PluginManager", "Submit", None))
         self.accept.setText(_translate("PluginManager", "OK", None))
 

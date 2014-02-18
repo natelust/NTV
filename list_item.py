@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'list_item.ui'
 #
-# Created: Wed Feb 12 22:07:01 2014
+# Created: Mon Feb 17 14:44:42 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -105,15 +105,30 @@ class Ui_listitem(object):
         self.horizontalLayout_2.setMargin(0)
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
         self.description = QtGui.QLabel(self.horizontalWidget_2)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.description.sizePolicy().hasHeightForWidth())
+        self.description.setSizePolicy(sizePolicy)
         self.description.setMinimumSize(QtCore.QSize(0, 0))
         self.description.setWordWrap(True)
         self.description.setObjectName(_fromUtf8("description"))
         self.horizontalLayout_2.addWidget(self.description)
-        self.updatebutton = QtGui.QPushButton(self.horizontalWidget_2)
+        self.verticalFrame = QtGui.QFrame(self.horizontalWidget_2)
+        self.verticalFrame.setObjectName(_fromUtf8("verticalFrame"))
+        self.verticalLayout_3 = QtGui.QVBoxLayout(self.verticalFrame)
+        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
+        self.updatebutton = QtGui.QPushButton(self.verticalFrame)
         self.updatebutton.setEnabled(False)
-        self.updatebutton.setMaximumSize(QtCore.QSize(75, 16777215))
+        self.updatebutton.setMaximumSize(QtCore.QSize(85, 16777215))
         self.updatebutton.setObjectName(_fromUtf8("updatebutton"))
-        self.horizontalLayout_2.addWidget(self.updatebutton)
+        self.verticalLayout_3.addWidget(self.updatebutton)
+        self.uninstallbutton = QtGui.QPushButton(self.verticalFrame)
+        self.uninstallbutton.setEnabled(False)
+        self.uninstallbutton.setMaximumSize(QtCore.QSize(85, 16777215))
+        self.uninstallbutton.setObjectName(_fromUtf8("uninstallbutton"))
+        self.verticalLayout_3.addWidget(self.uninstallbutton)
+        self.horizontalLayout_2.addWidget(self.verticalFrame)
         self.verticalLayout.addWidget(self.horizontalWidget_2)
         self.verticalLayout_2.addWidget(self.verticalGroupBox)
 
@@ -129,4 +144,5 @@ class Ui_listitem(object):
         self.latestversion.setText(_translate("listitem", "TextLabel", None))
         self.description.setText(_translate("listitem", "Description", None))
         self.updatebutton.setText(_translate("listitem", "Update", None))
+        self.uninstallbutton.setText(_translate("listitem", "Uninstall", None))
 
