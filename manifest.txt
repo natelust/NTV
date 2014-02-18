@@ -1,7 +1,7 @@
 {"type":"core",
 "name":"Details View",
 "module":"details_view",
-"url":"",
+"url":"https://github.com/natelust/details_view/archive/master.zip",
 "description":"A plugin which creates a window containing the details, such as photometry and radial profile, of a star which has been clicked on",
 "version":0.1,
 "ntv_version":0.4
