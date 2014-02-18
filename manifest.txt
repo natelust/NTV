@@ -1,0 +1,8 @@
+{"type":"core",
+"name":"Header Viewer",
+"module":"header_view",
+"url":"",
+"description":"Creates a view of the header for a fits file",
+"version":0.1,
+"ntv_version":0.4
+}
