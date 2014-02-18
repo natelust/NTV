@@ -1,0 +1,8 @@
+{"type":"addon",
+"name":"Levels",
+"module":"levels",
+"url":"",
+"description":"This plugin shows a brightness histogram, and allows setting of black and white points",
+"version":0.1,
+"ntv_version":0.4
+}
