@@ -1,10 +1,10 @@
 {"name":"Header Viewer",
-"url":"",
+"url":"https://github.com/natelust/header_view/archive/master.zip",
 "description":"Creates a view of the header for a fits file"
 }
 |
 {"name":"Levels",
-"url":"",
+"url":"https://github.com/natelust/levels/archive/master.zip",
 "description":"This plugin shows a brightness histogram, and allows setting of black and white points"
 }
 |
@@ -14,7 +14,7 @@
 }
 |
 {"name":"Preferance Box",
-"url":"",
+"url":"https://github.com/natelust/pref_box/archive/master.zip",
 "description":"A plugin to manage the user preferences of the NTV application"
 }
 |
@@ -22,4 +22,10 @@
 "name":"Example Plugin",
 "url":"https://github.com/natelust/example/archive/master.zip",
 "description":"This plugin is a demonstration on how to create a plugin"
+}
+|
+{
+"name":"Details View",
+"url":"https://github.com/natelust/details_view/archive/master.zip",
+"description":"A plugin which creates a window containing the details such as photometry and radial profile of a star which has been clicked on"
 }

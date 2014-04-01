@@ -1,12 +1,22 @@
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+try:
+    from PySide.QtCore import *
+    from PySide.QtGui import *
+except:
+    from PyQt4.QtCore import *
+    from PyQt4.QtGui import *
 import os
+import sys
 import plugin_manager as me
 from zipfile import ZipFile
 from io import BytesIO
-import urllib.request as urlr
 import json
 import shutil
+
+#This is a compatability mode for python2 and python3
+if sys.version_info[0] >=3:
+    import urllib.request as urlr
+else:
+    import urllib as urlr
 
 
 from .plugman import Ui_PluginManager
@@ -16,7 +26,7 @@ from .remote_item import Ui_remote_item
 #this is to get the directory of the containing module to get resources as other
 #programs will be actually running this module
 
-loc = me.__file__.rstrip('__init__.py')
+loc = me.__file__.rstrip('__init__.py').rstrip('plugin_manager.py').rstrip('plugin_manager.pyc')
 
 def read_version(zp):
     for item in zp.namelist():
