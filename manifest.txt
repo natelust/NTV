@@ -1,0 +1,8 @@
+{"type":"core",
+"name":"Three D",
+"module":"three_d",
+"url":"https://github.com/natelust/three_d/archive/master.zip",
+"description":"This plugin creates a graphical way to explore a three dimensional array",
+"version":0.1,
+"ntv_version":0.4
+}
