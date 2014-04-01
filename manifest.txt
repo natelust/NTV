@@ -1,0 +1,8 @@
+{"type":"core",
+"name":"Connection Listener",
+"module":"listener",
+"url":"https://github.com/natelust/listener/archive/master.zip",
+"description":"This is a background plugin which facilitates NTV listening for connections from remote or local connections",
+"version":0.1,
+"ntv_version":0.4
+}
