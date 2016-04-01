@@ -25,21 +25,21 @@ class pref_box(QDialog,Ui_prefs):
         #end hack
         self.pref = pref
         self.parent = parent
-        self.preview_size = self.pref.value('previewsize')
+        self.preview_size = self.pref.value('previewsize').toInt()[0]
         if self.preview_size == 20:
             self.preview20.setChecked(1)
         if self.preview_size == 10:
             self.preview10.setChecked(1)
         if self.preview_size == 5:
             self.preview5.setChecked(1)
-        self.cut_size = str(self.pref.value('cutsize'))
+        self.cut_size = str(self.pref.value('cutsize').toInt()[0])
         self.cutsizeset.setText(self.cut_size)
         self.origin_set = self.pref.value('origin')
         if self.origin_set == 'upper':
             self.plotup.setChecked(1)
         if self.origin_set == 'lower':
             self.plotdown.setChecked(1)
-        self.dbox = self.pref.value('dbox')
+        self.dbox = self.pref.value('dbox').toInt()[0]
         if self.dbox == 1:
             self.overplot.setChecked(1)
         if self.dbox == 0:
