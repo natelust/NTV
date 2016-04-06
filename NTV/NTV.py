@@ -197,7 +197,7 @@ class NTV(QMainWindow,Ui_NTV):
         self.imshow.canvas.fig.canvas.mpl_connect('button_release_event',self.color_right_rel)
         self.imshow.canvas.fig.canvas.mpl_connect('motion_notify_event',self.color_right_rel)
         self.imshow.canvas.fig.canvas.mpl_connect('scroll_event',self.color_right_rel)
-        self.imshow.toolbar.actions()[0].triggered.connect(self.nav_home)
+        #self.imshow.toolbar.actions()[0].triggered.connect(self.nav_home)
 
         #fuctions for minimap scaling
         self.func = lambda x,max,min: (255/(max-min))*x-(255*max/(max-min))+255
