@@ -1,0 +1,27 @@
+NOTE:
+
+This is almost certainly the wrong place to edit plugins. The plugins are
+implemented as subtrees in git. This means that committing is not handled in
+the normal way. Almost certainly the better course is to clone the plugin from
+it's own git repository and put it in the user plugins location for the
+platform you are developing. If you do not know where that is, see the top of
+NTV.py which specifies the locations. 
+
+If you are looking to build a new plugin the development should happen in a
+separate git repo, and for testing purposes placed in the user plugin
+location.
+
+If you are looking to update plugins or distribute new ones, please use the
+plugin manager built in the app. If you are looking to have your plugin added
+to the application as an addon plugin please put in a pull request on the
+plugin manager repository. If you are making a new core plugin, put in a pull
+request both in the main application repository, and in the plugin manager
+repository, so that the plugin manager will track it.
+
+Note to myself or a future maintainer:
+When it comes time for a new release and you want to pull in a new copy of the
+plugins at their state issue:
+
+git subtree --prefix=NTV/plugins/<plugin name> <plugin git url> <branch>
+
+where branch is probably master
