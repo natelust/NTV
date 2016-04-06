@@ -1,0 +1,9 @@
+{"type":"core",
+"name":"Preferance Box",
+"persistant":"True",
+"module":"pref_box",
+"url":"https://github.com/natelust/pref_box/archive/master.zip",
+"description":"A plugin to manage the user preferences of the NTV application",
+"version":0.1,
+"ntv_version":0.4
+}
