@@ -1,5 +1,6 @@
 {"type":"core",
 "name":"Plugin Manager",
+"persistant":"True",
 "module":"plugin_manager",
 "url":"https://github.com/natelust/plugin_manager/zipball/master",
 "description":"This is the plugin manager. It allows updating of existing plugins and installation of new ones",
