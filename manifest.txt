@@ -1,5 +1,6 @@
 {"type":"addon",
 "name":"Levels",
+"persistant":"True",
 "module":"levels",
 "url":"https://github.com/natelust/levels/archive/master.zip",
 "description":"This plugin shows a brightness histogram, and allows setting of black and white points",
