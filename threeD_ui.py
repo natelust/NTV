@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'threeD.ui'
 #
-# Created: Mon Feb 24 15:39:35 2014
-#      by: PyQt4 UI code generator 4.10.3
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,11 +25,12 @@ except AttributeError:
 class Ui_ThreeD(object):
     def setupUi(self, ThreeD):
         ThreeD.setObjectName(_fromUtf8("ThreeD"))
-        ThreeD.resize(188, 326)
+        ThreeD.resize(192, 329)
         self.horizontalLayout = QtGui.QHBoxLayout(ThreeD)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.groupBox = QtGui.QGroupBox(ThreeD)
         self.groupBox.setMaximumSize(QtCore.QSize(16777215, 300))
+        self.groupBox.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.groupBox)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -83,7 +83,16 @@ class Ui_ThreeD(object):
         self.clearbutton.setMaximumSize(QtCore.QSize(100, 16777215))
         self.clearbutton.setObjectName(_fromUtf8("clearbutton"))
         self.verticalLayout_2.addWidget(self.clearbutton)
-        self.horizontalLayout.addWidget(self.groupBox)
+        self.line = QtGui.QFrame(self.groupBox)
+        self.line.setFrameShape(QtGui.QFrame.HLine)
+        self.line.setFrameShadow(QtGui.QFrame.Sunken)
+        self.line.setObjectName(_fromUtf8("line"))
+        self.verticalLayout_2.addWidget(self.line)
+        self.LoadImageButton = QtGui.QPushButton(self.groupBox)
+        self.LoadImageButton.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.LoadImageButton.setObjectName(_fromUtf8("LoadImageButton"))
+        self.verticalLayout_2.addWidget(self.LoadImageButton)
+        self.horizontalLayout.addWidget(self.groupBox, QtCore.Qt.AlignVCenter)
         self.fnumbar = QtGui.QSlider(ThreeD)
         self.fnumbar.setOrientation(QtCore.Qt.Vertical)
         self.fnumbar.setInvertedAppearance(True)
@@ -106,4 +115,5 @@ class Ui_ThreeD(object):
         self.ybutton.setText(_translate("ThreeD", "Y-Axis", None))
         self.label_2.setText(_translate("ThreeD", "Reset Scaling", None))
         self.clearbutton.setText(_translate("ThreeD", "Clear", None))
+        self.LoadImageButton.setText(_translate("ThreeD", "Load Image", None))
 
