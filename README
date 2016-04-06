@@ -1,0 +1,37 @@
+This program is an astronomical data viewer. It is my attempt at being a clone to ATV for idl or DS9.
+It is missing features and could have some of the ones worked out better, but It is capable of being
+used to view fits files, and view properties of selected stars.
+
+In details view, it is possible to select the aperature and annulus positions by dragging the vertical
+lines to the desired position. If a three dimentional array is loaded, there will be a window which pops
+up to navigate the desired image. There is also a playback function in that window, to play in movie mode.
+
+To install
+from the command line run python setup.py install to have it install to the default site packages 
+directory.
+
+To run the program you can launch it with ntv from the command line.
+
+This can also be embeded into python interactive session.
+When in python,
+from NTV.embed import embed()
+some_instance_name = embed()
+
+to show an array:
+some_instance_name.showArray()
+
+Requirements:
+---------------
+Numpy
+Scipy dependency is depricated I belive, if your setup complains, install it
+Scipy >0.7.0 I think, there are some complains about numpy.test, your 
+version may work, but mine does with this version.
+
+Matplotlib
+astropy
+PyQt4
+Python > 2.6 OR multiprocessing package installed for embeded mode
+
+Optional:
+-----------
+Zeromq / python zeromq bindings

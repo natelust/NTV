@@ -1,0 +1,2 @@
+pyuic4-py3 NTV.ui > NTV_UI3.py
+pyrcc4-py3 icons.qrc -o icons_rc.py

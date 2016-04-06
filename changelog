@@ -1,0 +1,74 @@
+### version 0.1.2 ###
+nate lust: 	removed arbitrary plot labels, and updated readme
+
+### version 0.2 ###
+nate lust: 	created changelog
+		updated the minimap preview to reflect current scale appropriately
+		updated manifest.in to include changelog
+		Fixed issue where multiple button presses would create problems when picking star
+		Fixed issue with details view generation, occationally a float division error was
+			being generated when the fitgaussian function was failing
+		Added the ability to change the aperature size and annulus size from within the 
+			dialog box by clicking and draging the positions.
+		Fixed a bug where the background value was not being subtracted out of the photometry
+		TO DO: still need to get color map correct
+### version 0.3 ###
+nate lust:	Fixed a bug where you could set aperature diameter or annulus diameter to less than
+			zero.
+		Using the open functions of the drag and drop features from embeded mode should now
+			work, please test
+		Created a fits header viewer, invoke it with file header or ctl-h, needs a bit of work
+			for justifying the text
+		Updated the color pallet to be a bit more pleasing on eyes
+		Updated the centering in details view to a two step process, first find maximum pixel
+			in the cut size, recut based on that max position to ensure the fitgaussian
+			sees and fits appropriately
+		Put together three D support, still need to impliment playback support
+		Updated comments in code
+		Implemented play back support in threeD view window
+		Updated Details view to persist, and be nonModal, in order to have more than one open
+			at a time. May make it as an option to have them open in same window.
+		Fixed constraints and drawing problems in the details view for small arrays.
+		Updated details view to better handle small arrays, with small cutsizes
+		Updated minimap to handle edge events better, can go out toward edge, where pointer
+			will go up to within three pixels of the edge, ie the border of cursor will
+			go right to edge.Still need a bit of work with really small arrays
+		Updated minimap to scale more appropriately for small arrays, higher scale due to
+			smaller cut size, since array is much smaller. Still have a bit of issue with
+			the pointer in small minimap.
+		Updated spelling in details view.
+### current ###
+nate lust:	Fixed a bug that was causing a segfault on some machines, when the sleeper theread 
+			not being properly terrminated.
+		Fixed a bug where if there was a zero or negitive number there was a problem when
+			switching to log view due to log of negitive number or zero
+		Added vertical and horrizontal cut views to the details dialog box.
+		Fixed a bug where the figures in the details view were not being drawn properly when
+			a resize event occurs.
+		Added a basic about message.
+		Implemented preference dialog. The user can now choose the preview size, the origin
+			location (when this happens the image is inverted, and the preivew is properly
+			inverted as well), the default cutsize for the details view, and wether the
+			details view draws over its own window or opens multiple windows.
+		Added a y and x cut window, able to be hidden or shown, need to add the ability to draw
+			the actual cut
+		Updated the color to be more usefull
+		Fixed an issue where when you had a resized window, then changed the scaling it would 
+			redraw the frame at full size. This now behaives as expected. changing the 
+			flux scale now preserves the zoom. This is done by recording the ax limits before
+			redraw and resetting the limits after the draw. This gets overridden when loading
+			a new frame. 
+		Addes the virtical and horrizontal profile view that track the mouse motion. OpenGL can
+			be used to accellerate the drawing if pyqt has the qtopengl binding 
+		Added a check to the embed class. If the function fails to fork a separate process inorder
+			to free the terminal, it should place NTV in a separate thread
+		Updated the system executeable to be ntviewer, as the previous ntv had problems with OS X
+			in that OS X dose not respect case, and copied the folder NTV over the executeable
+		Undid the try statement in embed and replaced it with a stronger if else statement, If
+			your not using os x it forks it, else it threads it
+		Added the ability to move the mouse in the image frame with the keys, this however is in
+			screen pixel scales, may be usefull to have only in image pixel movements
+		Fixed fixed the ability to embed NTV now provided by a standalone file called embed.
+			to put in your program, call from NTV.embed import embed. This is the embed class
+			created and instance and pass arrays with showArray
+		Fixed the justification in the header view, had to set the font pitch to fixed

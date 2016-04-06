@@ -1,0 +1,22 @@
+#! /usr/bin/env python
+
+import sys
+#sys.path.append('NTV')
+
+from NTV.NTV import *
+from optparse import OptionParser
+usage = "usage: %prog [options] filename"
+parser = OptionParser()
+parser.add_option("-p","--port",dest='port',help='Port to start zmq listening',\
+                      metavar='PORT')
+(options, args) = parser.parse_args()
+import sys
+app = QApplication(sys.argv)
+if len(args) > 0:
+	filez = args[0]
+else:
+  filez = None
+plot = NTV(file=filez,port=options.port)
+plot.show()
+sys.exit(app.exec_())
+
