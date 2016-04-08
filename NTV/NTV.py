@@ -660,19 +660,19 @@ class NTV(QMainWindow,Ui_NTV):
                 self.minipix.setMatrix(matrix)
                 self.minipix_scene.update()
                 self.pixval_scene.clear()
-                #try:
-                coord = SkyCoord(*self.wcs.all_pix2world(event.xdata, event.ydata, 0,
-                                 ra_dec_order=True), unit='deg')
-                hour = coord.ra.hour
-                raMinute = (hour-int(hour))*60
-                raSecond = (raMinute - int(raMinute))*60
-                dec = coord.dec.deg
-                decMinute = (dec - int(dec))*60
-                decSecond = (decMinute - int(decMinute))*60
-                ra = "{:.0f}:{:.0f}:{:.2f}".format(hour, raMinute, raSecond)
-                dec = "{:.0f}:{:.0f}:{:.2f}".format(dec, decMinute, decSecond)
-                #except:
-                #    ra,dec = (0.0,0.0)
+                try:
+                    coord = SkyCoord(*self.wcs.all_pix2world(event.xdata, event.ydata, 0,
+                                     ra_dec_order=True), unit='deg')
+                    hour = coord.ra.hour
+                    raMinute = (hour-int(hour))*60
+                    raSecond = (raMinute - int(raMinute))*60
+                    dec = coord.dec.deg
+                    decMinute = (dec - int(dec))*60
+                    decSecond = (decMinute - int(decMinute))*60
+                    ra = "{:.0f}:{:.0f}:{:.2f}".format(hour, raMinute, raSecond)
+                    dec = "{:.0f}:{:.0f}:{:.2f}".format(dec, decMinute, decSecond)
+                except:
+                    ra,dec = (0.0,0.0)
                 text_save = QGraphicsTextItem('%s\n%.2f\n%.2f\n%s\n%s'%(self.image[event.ydata,\
                                      event.xdata], event.xdata, event.ydata, ra, dec))
                 text_save.setPos(0,0)
