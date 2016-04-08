@@ -1,5 +1,14 @@
 #! /usr/bin/env python
 import numpy as np
+import functools
+import time
+from NTV.utils import commandObject
+
+def interact(obj, self, *args, **kwargs):
+    self.sock.send_pyobj([obj, args, kwargs])
+    ret = self.sock.recv_pyobj()
+    return ret
+    
 
 class embed():
     '''
@@ -13,38 +22,21 @@ class embed():
     >>> x = numpy.arange(441)
     >>> x = x.reshape(21,21)
     >>> my_instance = embed()
-    >>> my_instance.showArray(x)
+    >>> my_instance.show_array(x)
     '''
     import zmq
     import numpy
     import numpy as np
     import socket
     import subprocess
+    from NTV.utils import commandObject
     import json
-    try:
-        import simplejson as json
-    except:
-        pass
-    try:
-        import ujson as json
-    except:
-        pass
 
     def __init__(self,port=False):
         import zmq
         import numpy
         import socket
         import subprocess
-        import json
-        try:
-            import simplejson as json
-        except:
-            pass
-        try:
-            import ujson as json
-        except:
-            pass
-        self.json = json
         try:
             self.port = int(port)
         except:
@@ -62,35 +54,17 @@ class embed():
                 except:
                     pass
 
-            subprocess.Popen(['./ntviewer','-p '+str(self.port)])
+            subprocess.Popen(['ntviewer','-p '+str(self.port)])
         context = zmq.Context()
         self.sock = context.socket(zmq.REQ)
         self.sock.connect('tcp://127.0.0.1:'+str(self.port))
+        time.sleep(1)
+        self.buildFunctionList()
 
-    def sendData(self,name,data):
-        if type(data) == type(np.zeros(0)):
-            data = data.tolist()
-        #if type(data) != type(''):
-        #    data = str(data)
-        if type(name) != type(''):
-            name = str(name)
-        dump = self.json.dumps((name,data))
-        self.sock.send_string(dump)
-        ret = self.sock.recv_string()
-        return ret
-
-    def getData(self,name):
-        if type(name) != type(''):
-            name = str(name)
-        dump = self.json.dumps((name,))
-        self.sock.send_string(dump)
-        tup = self.sock.recv_string()
-        res = self.json.loads(tup)
-        return res
-
-    def showArray(self,array):
-        self.sendData('show_array',array)
-
-    def get_yx(self):
-        res = list(self.getData('get_xy'))
-        return res[1],res[0]
+    def buildFunctionList(self):
+        request = commandObject('listener', 'None', 'None')
+        self.sock.send_pyobj([request, 'None', 'None'])
+        commandFunctions = self.sock.recv_pyobj()
+        for cmd in commandFunctions:
+            setattr(self,cmd.function, functools.partial(interact, cmd, self))
+            setattr(getattr(self,cmd.function),'__doc__',cmd.signature)
