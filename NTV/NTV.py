@@ -20,7 +20,7 @@ from threading import Lock
 import os
 import importlib
 import NTV as me
-from utils import ifImage, myDockWidget
+from utils import ifImage, myDockWidget, commandObject, CommandRegistry
 
 
 if sys.platform == 'darwin':
@@ -277,14 +277,17 @@ class NTV(QMainWindow,Ui_NTV):
         for plug in self.plugins_global_dict:
             if self.plugins_global_dict[plug]['manifest']['type'] == 'addon':
                 self.plugins_dir_list.append(plug)
-        qactions = [self.menuPlugins.addAction(\
-                    self.plugins_global_dict[x]['manifest']['name'].title(),\
-                    self.plugin_clicked)\
-                    for x in self.plugins_dir_list]
-        for i in range(len(qactions)):
-            qactions[i].setObjectName(self.plugins_dir_list[i])
+        self.pluginQactions = {}
         for plug in self.plugins_dir_list:
+            self.pluginQactions[plug] = self.menuPlugins.addAction(\
+                    self.plugins_global_dict[plug]['manifest']['name'].title(),\
+                    self.plugin_clicked)
+            self.pluginQactions[plug].setObjectName(plug)
             self.plugins_module_dict[plug] = importlib.import_module('%s.%s'%(plug,plug))
+        #for i,key in enumerate(self.pluginQactions.keys()):
+        #    self.pluginQactions[key].setObjectName(self.plugins_dir_list[i])
+        #for plug in self.plugins_dir_list:
+        #    self.plugins_module_dict[plug] = importlib.import_module('%s.%s'%(plug,plug))
 
 
     @ifImage
@@ -458,9 +461,9 @@ class NTV(QMainWindow,Ui_NTV):
         the class if the program is used in embeded mode, and an array is
         passed to the pipe.
         '''
-        self.image = array
+        image = array
         self.filelab.setText("<font color=blue>Numpy Array</font>")
-        self.loadinfo(image)
+        self.loadinfo(image=image)
 
     def getclick(self):
         '''
@@ -555,8 +558,8 @@ class NTV(QMainWindow,Ui_NTV):
         loaded, if not it notifys the user
         '''
         if file.find('fits') != -1 or file.find('FIT')!=-1 or file.find('fit')!=-1:
-            self.path = file
-            self.loadinfo()
+            path = file
+            self.loadinfo(path=path)
         else:
             self.filelab.setText('<font color=red>Invalid Format</font>')
 
@@ -832,15 +835,16 @@ class NTV(QMainWindow,Ui_NTV):
             tarray[i] = np.array(tarray[i])
         return tarray
 
-    def loadinfo(self, image=None):
+    def loadinfo(self, image=None, path=None):
         '''
         Load in a file if not in embeded mode. Function updates labels accordingly
         '''
-        self.filelab.setText("<font color=blue>"+self.path+"</font>")
-        if image:
+        if path != None:
+            self.filelab.setText("<font color=blue>"+path+"</font>")
+        if image != None:
             head = None
         else:    
-            image, head = astroIo.getdata(self.path,header=True)
+            image, head = astroIo.getdata(path,header=True)
 
         # Catch nans and set to zero for now
         image[image != image] = 0
