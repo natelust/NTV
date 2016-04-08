@@ -2,6 +2,8 @@
 import numpy as np
 import functools
 import time
+import os
+
 from NTV.utils import commandObject
 
 def interact(obj, self, *args, **kwargs):
@@ -29,8 +31,8 @@ class embed():
     import numpy as np
     import socket
     import subprocess
+    import os
     from NTV.utils import commandObject
-    import json
 
     def __init__(self,port=False):
         import zmq
@@ -53,8 +55,14 @@ class embed():
                     break
                 except:
                     pass
+            # Find the ntv executable, this next bit is to work around
+            # os x sip issues and compiled extensions
+            for path in os.environ["PATH"].split(os.pathsep):
+                exe = os.path.join(path.strip('"'), 'ntviewer')
+                if os.path.isfile(exe) and os.access(exe, os.X_OK):
+                    break
 
-            subprocess.Popen(['ntviewer','-p '+str(self.port)])
+            subprocess.Popen(['python', exe ,'-p '+str(self.port)])
         context = zmq.Context()
         self.sock = context.socket(zmq.REQ)
         self.sock.connect('tcp://127.0.0.1:'+str(self.port))
