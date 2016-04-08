@@ -5,6 +5,12 @@ except:
     from PyQt4.QtCore import *
     from PyQt4.QtGui import *
 
+from collections import namedtuple
+import inspect
+import importlib
+
+commandObject = namedtuple("commandObject", "name function signature")
+
 # Define a decorator to check image loading status
 def ifImage(func):
     def _wrapper(self, *args, **kwargs):
@@ -30,3 +36,16 @@ class myDockWidget(QDockWidget):
             self.emit(SIGNAL('closing'),self.ident)
             event.accept()
 
+class CommandRegistry():
+    commands = []
+
+def hasCommands(*methods):
+    commandObject = importlib.import_module("NTV.utils").commandObject
+    CommandRegistry = importlib.import_module("NTV.utils").CommandRegistry
+    def classFactory(cls):
+        for meth in methods:
+            CommandRegistry.commands.append(commandObject(cls.__name__,
+                            meth,
+                            inspect.getargspec(getattr(cls,meth)).__repr__()))
+        return cls
+    return classFactory
