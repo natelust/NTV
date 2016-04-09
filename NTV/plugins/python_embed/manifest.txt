@@ -1,6 +1,6 @@
 {"type":"background",
 "name":"Python Embed",
-"persistant":"True",
+"persistent":"True",
 "module":"python_embed",
 "url":"https://github.com/natelust/python_embed/archive/master.zip",
 "description":"This module is a background module that facilitates embeding ntv into a python session for interactive work",
