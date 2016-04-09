@@ -313,7 +313,7 @@ class NTV(QMainWindow,Ui_NTV):
         # current time as the dictionary key
         else:
             try:
-                if self.plugins_global_dict[plugin]['manifest']["persistant"] == 'True':
+                if self.plugins_global_dict[plugin]['manifest']["persistent"] == 'True':
                     ident   = plugin
                     persist = True
                 else:
@@ -889,6 +889,7 @@ class NTV(QMainWindow,Ui_NTV):
         self.ydim.setText(str(self.image.shape[0]))
         self.check_preview()
         self.homeImage = 1
+        self.wcs = None
         if self.head:
             #try:
             self.wcs = astroWcs.WCS(self.head)
@@ -913,7 +914,6 @@ class NTV(QMainWindow,Ui_NTV):
         It pulls the required elements from the ui on each redraw
         whenever possible try to use update canvas, as it is faster
         '''
-        self.emit(SIGNAL('update_main_canvas'))
         #self.max_m_min = self.imageedit.max()-self.imageedit.min()
         #ylims,xlims This is to preserve the zooming when redrawing the image for some reason
         xlims=self.imshow.canvas.ax.get_xlim()
@@ -942,6 +942,7 @@ class NTV(QMainWindow,Ui_NTV):
             self.imshow.canvas.ax.set_xlim(xlims)
             self.imshow.canvas.draw()
         self.homeImage = 0
+        self.emit(SIGNAL('update_main_canvas'))
 
 
 if __name__=="__main__":
