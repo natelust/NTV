@@ -1,6 +1,6 @@
 {"type":"core",
 "name":"Header Viewer",
-"persistant":"True",
+"persistent":"True",
 "module":"header_view",
 "url":"https://github.com/natelust/header_view/archive/master.zip",
 "description":"Creates a view of the header for a fits file",
