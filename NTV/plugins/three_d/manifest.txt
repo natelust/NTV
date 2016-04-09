@@ -1,6 +1,6 @@
 {"type":"core",
 "name":"Three D",
-"persistant":"True",
+"persistent":"True",
 "module":"three_d",
 "url":"https://github.com/natelust/three_d/archive/master.zip",
 "description":"This plugin creates a graphical way to explore a three dimensional array",
