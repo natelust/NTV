@@ -29,3 +29,27 @@
 "url":"https://github.com/natelust/details_view/archive/master.zip",
 "description":"A plugin which creates a window containing the details such as photometry and radial profile of a star which has been clicked on"
 }
+|
+{
+"name":"LSST Explorer",
+"url":"https://github.com/natelust/lsst_explorer/archive/master.zip",
+"description":"Plugin to enable exploration of lsst exposures, masked images, and catalogs",
+}
+|
+{
+"name":"Three D",
+"url":"https://github.com/natelust/three_d/archive/master.zip",
+"description":"This is an internal use plugin that allows navigation of datacubes and allows creating data cubes and blink images"
+}
+|
+{
+"name":"Python Embed",
+"url":"https://github.com/natelust/python_embed/archive/master.zip",
+"description":"This plugin gets imported python to allow communication with NTV from the python interpreter"
+}
+|
+{
+"name":"Listener",
+"url":"https://github.com/natelust/listener/archive/master.zip",
+"description":"This plugin is what is used interally by NTV to recive messages from the python interpreter"
+}
