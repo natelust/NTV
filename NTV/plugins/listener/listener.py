@@ -39,8 +39,10 @@ class listener(QThread):
                 try:
                     if obj.name == 'listener':
                         ret = CommandRegistry.commands
+                        self.sock.send_pyobj(ret)
                     elif obj.name == 'NTV':
                         ret = getattr(self, obj.function)(*args, **kwargs)
+                        self.sock.send_pyobj(ret)
                     else:
                         makeNew = True
                         for key in self.parent.plugins_dock_dict.keys():
@@ -53,14 +55,16 @@ class listener(QThread):
                             # Sleep to give the plugin time to be created on the other thread
                             time.sleep(0.5)
                             for key in self.parent.plugins_dock_dict.keys():
-                                print(obj.name, self.parent.plugins_dock_dict[key].widget().__class__.__name__)
                                 if self.parent.plugins_dock_dict[key].widget().__class__.__name__ == obj.name:
                                     break
-                        ret = getattr(self.parent.plugins_dock_dict[key].widget(),\
-                                      obj.function)(*args, **kwargs)
+                        self.emit(SIGNAL('RUNCOMMAND'), getattr(self.parent.plugins_dock_dict[key].widget(),\
+                                      obj.function), args, kwargs)
+                        # The thread is terminated here, and will be restarted due to some issues with
+                        # Drawing cross threads, and returning asyncronously across threads
+                        break
                 except:
                     ret = None
-                self.sock.send_pyobj(ret)
+                    self.sock.send_pyobj(ret)
             time.sleep(1)
 
     def show_array(self,array):
