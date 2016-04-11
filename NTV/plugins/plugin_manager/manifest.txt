@@ -4,6 +4,6 @@
 "module":"plugin_manager",
 "url":"https://github.com/natelust/plugin_manager/zipball/master",
 "description":"This is the plugin manager. It allows updating of existing plugins and installation of new ones",
-"version":0.01,
-"ntv_version":0.4
+"version":0.02,
+"ntv_version":0.5
 }
