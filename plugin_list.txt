@@ -33,7 +33,7 @@
 {
 "name":"LSST Explorer",
 "url":"https://github.com/natelust/lsst_explorer/archive/master.zip",
-"description":"Plugin to enable exploration of lsst exposures, masked images, and catalogs",
+"description":"Plugin to enable exploration of lsst exposures, masked images, and catalogs"
 }
 |
 {
