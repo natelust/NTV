@@ -31,7 +31,7 @@
 }
 |
 {
-"name":"LSST Explorer",
+"name":"Lsst Explorer",
 "url":"https://github.com/natelust/lsst_explorer/archive/master.zip",
 "description":"Plugin to enable exploration of lsst exposures, masked images, and catalogs"
 }
@@ -49,7 +49,7 @@
 }
 |
 {
-"name":"Listener",
+"name":"Connection Listener",
 "url":"https://github.com/natelust/listener/archive/master.zip",
 "description":"This plugin is what is used interally by NTV to recive messages from the python interpreter"
 }
