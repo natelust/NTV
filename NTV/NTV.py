@@ -285,13 +285,8 @@ class NTV(QMainWindow,Ui_NTV):
                     self.plugin_clicked)
             self.pluginQactions[plug].setObjectName(plug)
             self.plugins_module_dict[plug] = importlib.import_module('%s.%s'%(plug,plug))
-        #for i,key in enumerate(self.pluginQactions.keys()):
-        #    self.pluginQactions[key].setObjectName(self.plugins_dir_list[i])
-        #for plug in self.plugins_dir_list:
-        #    self.plugins_module_dict[plug] = importlib.import_module('%s.%s'%(plug,plug))
 
 
-    @ifImage
     def plugin_clicked(self, plugin=None, hidden=False):
         '''
         This function handles when plugins are clicked, and generates the
@@ -324,13 +319,22 @@ class NTV(QMainWindow,Ui_NTV):
                 ident   = time.ctime()
                 persist = False
             tmp = self.plugins_module_dict[plugin]
-            self.plugins_dock_dict[ident] = myDockWidget(plugin,ident,persist,parent=self)
-            self.plugins_dock_dict[ident].setWindowTitle(self.plugins_global_dict[plugin]['manifest']['name'])
-            QObject.connect(self.plugins_dock_dict[ident],SIGNAL('closing'),self.plugin_closed)
-            self.plugins_dock_dict[ident].setObjectName(plugin)
-            self.plugins_dock_dict[ident].setAllowedAreas(Qt.RightDockWidgetArea)
-            self.plugins_dict[ident] = getattr(tmp,plugin)(self, parent=self.plugins_dock_dict[ident])
-            self.plugins_dock_dict[ident].setWidget(self.plugins_dict[ident])
+            # Catch plugins that can't be initialized if there is no data
+            try:
+                self.plugins_dock_dict[ident] = myDockWidget(plugin,ident,persist,parent=self)
+                self.plugins_dock_dict[ident].setWindowTitle(self.plugins_global_dict[plugin]['manifest']['name'])
+                QObject.connect(self.plugins_dock_dict[ident],SIGNAL('closing'),self.plugin_closed)
+                self.plugins_dock_dict[ident].setObjectName(plugin)
+                self.plugins_dock_dict[ident].setAllowedAreas(Qt.RightDockWidgetArea)
+                self.plugins_dict[ident] = getattr(tmp,plugin)(self, parent=self.plugins_dock_dict[ident])
+                self.plugins_dock_dict[ident].setWidget(self.plugins_dict[ident])
+            # If there is an error, don't keep a record of it
+            except:
+                if ident in self.plugins_dock_dict:
+                    del self.plugins_dock_dict[ident]
+                if ident in self.plugins_dict:
+                    del self.plugins_dict[ident]
+                return
 
             # If the plugin should be hidden, hide it
             if hidden:
