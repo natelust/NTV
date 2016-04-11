@@ -810,6 +810,7 @@ class NTV(QMainWindow,Ui_NTV):
         self.update_canvas()
 
     def set_extents(self,extents):
+        self.imshow.toolbar.push_current()
         self.imshow.canvas.ax.set_ylim(extents[0])
         self.imshow.canvas.ax.set_xlim(extents[1])
 
