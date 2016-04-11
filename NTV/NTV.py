@@ -772,7 +772,7 @@ class NTV(QMainWindow,Ui_NTV):
         self.imdata.set_clim(vmax=self.white,vmin=self.black)
         self.imdata.changed()
         self.imshow.canvas.draw()
-
+        
 
     def color_press_motion(self,event):
         if event.button == 1 and event.inaxes == self.colorbar.ax and event.dblclick == False:
@@ -918,7 +918,7 @@ class NTV(QMainWindow,Ui_NTV):
         self.emit(SIGNAL('update_3d'))
         self.guess_white_black()
         self.drawim()
-
+    
     def drawim(self):
         '''
         This fucntion actually handles the drawing of the imshow mpl canvas.
