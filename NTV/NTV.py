@@ -981,16 +981,10 @@ implement more dialog information such as s/n calc, ap and an positions, fwhm
 get wiki and doc writer
 update readme
 need to update some comments in the code for the new features.
-stop three D window from closing
 add circles to view in display window
-upload all plugins to github
-update all manifests w/ full information
-update plugin list
-move rest of code to plugins (remote/embed)
 look into zmq from remote connection
 maybe make a meeting plugin
 fix autoscale for small things (low priority)
 update plugman for minimum version and plugin type
 make everything try for pyside
-fix save scale for mixed 3d
 '''
