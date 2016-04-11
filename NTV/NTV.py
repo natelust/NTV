@@ -234,9 +234,10 @@ class NTV(QMainWindow,Ui_NTV):
                 self.port = self.sock.bind_to_random_port('tcp://127.0.0.1')
             else:
                     self.sock.bind('tcp://127.0.0.1:'+str(self.port))
-                    self.recive = listener(self,self.port,self.sock,self.lock)
-                    self.recive.start()
-                    self.setWindowTitle('NTV - Listening on tcp://127.0.0.1:'+str(self.port))
+            self.recive = listener(self,self.port,self.sock,self.lock)
+            self.recive.start()
+            self.setWindowTitle('NTV - Listening on tcp://127.0.0.1:'+str(self.port))
+            QObject.connect(self.recive, SIGNAL('RUNCOMMAND'), self.run_command)
         except:
             self.setWindowTitle('NTV - Error with ZMQ')
 
@@ -779,6 +780,12 @@ class NTV(QMainWindow,Ui_NTV):
             self.make_white_black()
             tmp = self.plugins_module_dict['levels']
             self.level_view = eval('tmp.levels(self,None)')
+
+
+    def run_command(self, func, args, kwargs):
+        ret = func(*args, **kwargs)
+        self.sock.send_pyobj(ret)
+        self.recive.start()
 
 
     def color_right_rel(self,event):
