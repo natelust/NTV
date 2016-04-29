@@ -20,7 +20,7 @@ from threading import Lock
 import os
 import importlib
 import NTV as me
-from utils import ifImage, myDockWidget, commandObject, CommandRegistry
+from .utils import ifImage, myDockWidget, commandObject, CommandRegistry
 
 
 if sys.platform == 'darwin':
@@ -100,7 +100,12 @@ class NTV(QMainWindow,Ui_NTV):
         QCoreApplication.setApplicationName('NTV')
         self.settings = QSettings('NTV_project', 'NTV')
         #check to see if a config file has been created if not create one
-        if self.settings.value('has_config').toInt()[0] == 0:
+        try:
+            # For python2
+            config_check = self.settings.value('has_config').toInt()[0]
+        except:
+            config_check = self.settings.value('has_config')
+        if config_check == 0:
             self.write_config()
         #If new preference objects are added,
         if Update_config == True:

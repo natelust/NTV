@@ -1,3 +1,2 @@
-import NTV
-import utils
-import embed
+from . import NTV, utils, embed
+
