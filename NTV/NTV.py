@@ -137,6 +137,8 @@ class NTV(QMainWindow,Ui_NTV):
         self.base_loc = base_loc
         self.user_loc = user_loc
         self.wcs = None
+        self.imageeditMin = None
+        self.imageeditMax = None
 
         #Set some UI elements
 
@@ -742,10 +744,10 @@ class NTV(QMainWindow,Ui_NTV):
             self.contrast = 0.01
         self.white = self.gray+self.max_m_min*self.contrast
         self.black = self.gray-self.max_m_min*self.contrast
-        if self.white > self.imageedit.max():
-            self.white = self.imageedit.max()
-        if self.black < self.imageedit.min():
-            self.black = self.imageedit.min()
+        if self.white > self.imageeditMax:
+            self.white = self.imageeditMax
+        if self.black < self.imageeditMin:
+            self.black = self.imageeditMin
         self.update_canvas()
 
     def guess_white_black(self):
@@ -762,27 +764,29 @@ class NTV(QMainWindow,Ui_NTV):
 
 
     def make_gray_const(self):
-        self.max_m_min = self.imageedit.max()-self.imageedit.min()
+        self.max_m_min = self.imageeditMax-self.imageeditMin
         self.contrast = ((self.white - self.black)/2./self.max_m_min)
         self.gray = self.black+(self.white-self.black)/2.
-
 
     def update_canvas(self):
         self.make_gray_const()
         self.emit(SIGNAL('update_main_canvas'))
         self.imdata.set_data(self.imageedit)
         self.imdata.colorbar.set_array(self.imageedit)
-        self.imdata.colorbar.boundaries = np.linspace(self.imageedit.min(),self.imageedit.max(),1000)
+        self.imdata.colorbar.boundaries = np.linspace(self.imageeditMin,self.imageeditMax,1000)
         self.imdata.colorbar.autoscale()
         self.imdata.set_clim(vmax=self.white,vmin=self.black)
         self.imdata.changed()
+        #self.imshow.canvas.ax.draw_artist(self.imdata)
+        #self.imdata.colorbar.draw_all()
+        #self.imshow.canvas.update()
+        #self.imshow.canvas.flush_events()
         self.imshow.canvas.draw()
-        
 
     def color_press_motion(self,event):
         if event.button == 1 and event.inaxes == self.colorbar.ax and event.dblclick == False:
             self.last_gray = self.gray
-            self.gray = self.max_m_min*event.ydata+self.imageedit.min()
+            self.gray = self.max_m_min*event.ydata+self.imageeditMin
             self.make_white_black()
         if event.button == 1 and event.inaxes == self.colorbar.ax and event.dblclick:
             self.gray = self.last_gray
@@ -835,6 +839,8 @@ class NTV(QMainWindow,Ui_NTV):
             self.imageedit = self.image.copy()
             self.imageedit[np.where(self.imageedit <=0)]=0.001
             self.imageedit = np.log(self.imageedit)
+        self.imageeditMin = self.imageedit.min()
+        self.imageeditMax = self.imageedit.max()
 
     @ifImage
     def cmapupdate(self, extra):
@@ -900,8 +906,10 @@ class NTV(QMainWindow,Ui_NTV):
         #set all the initial scalling for the
         self.guess_white_black()
         #set associated information
-        self.minlab.setText(str(self.image.min()))
-        self.maxlab.setText(str(self.image.max()))
+        self.imageeditMin = self.imageedit.min()
+        self.imageeditMax = self.imageedit.max()
+        self.minlab.setText(str(self.imageeditMin))
+        self.maxlab.setText(str(self.imageeditMax))
         self.xdim.setText(str(self.image.shape[1]))
         self.ydim.setText(str(self.image.shape[0]))
         self.check_preview()
@@ -944,7 +952,7 @@ class NTV(QMainWindow,Ui_NTV):
         self.ctext = str(self.cmapbox.currentText())
         self.z = getattr(matplotlib.pyplot.cm, self.ctext)
         #updated the canvas and draw
-        self.imdata = self.imshow.canvas.ax.imshow(self.imageedit,vmax=self.white,vmin=self.black,cmap=self.z,interpolation=None,alpha=1,origin=self.orig)
+        self.imdata = self.imshow.canvas.ax.imshow(self.imageedit,vmax=self.white,vmin=self.black,cmap=self.z,interpolation='none',alpha=1,origin=self.orig,rasterized=True)
         self.cbbounds  = np.linspace(self.imageedit.min(),self.imageedit.max(),1000)
         self.colorbar = self.imshow.canvas.fig.colorbar(self.imdata,ax = self.imshow.canvas.ax,boundaries=self.cbbounds)
         self.colorbar.ax.tick_params(labelsize=8)
