@@ -28,13 +28,16 @@ class myDockWidget(QDockWidget):
         QDockWidget.__init__(self,name,parent=parent)
         self.ident = ident
         self.persist = persist
+        self.forceClose = False
     def closeEvent(self,event):
-        if self.persist:
+        if self.persist and not self.forceClose:
             event.ignore()
             self.hide()
         else:
-            self.emit(SIGNAL('closing'),self.ident)
+            self.customClose()
             event.accept()
+    def customClose(self):
+        self.emit(SIGNAL('closing'), self.ident)
 
 class CommandRegistry():
     commands = []
