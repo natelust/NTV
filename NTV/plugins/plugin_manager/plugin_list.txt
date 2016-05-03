@@ -53,3 +53,9 @@
 "url":"https://github.com/natelust/listener/archive/master.zip",
 "description":"This plugin is what is used interally by NTV to recive messages from the python interpreter"
 }
+|
+{
+"name":"Mask Handler",
+"url":"https://github.com/natelust/mask_handler/archive/master.zip",
+"description":"This plugin is used internally by NTV to handle making and displaying masks"
+}
