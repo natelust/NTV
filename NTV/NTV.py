@@ -220,6 +220,11 @@ class NTV(QMainWindow,Ui_NTV):
         self.threeDaction.setObjectName('three_d')
         self.plugins_module_dict['three_d'] = importlib.import_module('three_d.three_d')
 
+        # Add the mask plugin to the application
+        self.maskAction = self.menuImage.addAction("Masks", self.plugin_clicked)
+        self.maskAction.setObjectName("mask_handler")
+        self.plugins_module_dict['mask_handler'] = importlib.import_module('mask_handler.mask_handler')
+
         #load in the addon plugins
         self.load_plugins()
 
@@ -356,6 +361,7 @@ class NTV(QMainWindow,Ui_NTV):
                 self.tabifyDockWidget(self.plugins_dock_dict[self.plugins_dock_list\
                                   [-1]],self.plugins_dock_dict[ident])
                 self.plugins_dock_list.append(ident)
+            self.plugins_dock_dict[ident].raise_()
 
     def plugin_closed(self,ident):
         QObject.disconnect(self.plugins_dock_dict[ident],SIGNAL('closing'),self.plugin_closed)
@@ -851,6 +857,17 @@ class NTV(QMainWindow,Ui_NTV):
         self.z = getattr(matplotlib.pyplot.cm, self.ctext)
         self.imdata.set_cmap(self.z)
         self.imshow.canvas.draw()
+
+    def add_mask(self, mask, name=None):
+        self.plugin_clicked(plugin='mask_handler')
+        self.plugins_dict['mask_handler'].add_mask(mask, name)
+
+    def clear_mask(self):
+        try:
+            self.plugins_dock_dict['mask_handler'].forceClose = True
+            self.plugins_dock_dict['mask_handler'].close()
+        except:
+            pass
 
     def make_threed_list(self,array):
         tarray = array.tolist()
