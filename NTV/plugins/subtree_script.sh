@@ -1,0 +1,9 @@
+git subtree pull --prefix=NTV/plugins/details_view https://github.com/natelust/details_view.git master
+git subtree pull --prefix=NTV/plugins/header_view https://github.com/natelust/header_view.git master
+git subtree pull --prefix=NTV/plugins/levels https://github.com/natelust/levels.git master
+git subtree pull --prefix=NTV/plugins/listener https://github.com/natelust/listener.git master
+git subtree pull --prefix=NTV/plugins/plugin_manager https://github.com/natelust/plugin_manager.git master
+git subtree pull --prefix=NTV/plugins/pref_box https://github.com/natelust/pref_box.git master
+git subtree pull --prefix=NTV/plugins/python_embed https://github.com/natelust/python_embed.git master
+git subtree pull --prefix=NTV/plugins/three_d https://github.com/natelust/three_d.git master
+git subtree pull --prefix=NTV/plugins/mask_handler https://github.com/natelust/mask_handler.git master
