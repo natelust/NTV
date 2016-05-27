@@ -9,7 +9,7 @@ from collections import namedtuple
 import inspect
 import importlib
 
-commandObject = namedtuple("commandObject", "name function signature")
+commandObject = namedtuple("commandObject", "name function signature pipe")
 
 # Define a decorator to check image loading status
 def ifImage(func):
@@ -47,8 +47,14 @@ def hasCommands(*methods):
     CommandRegistry = importlib.import_module("NTV.utils").CommandRegistry
     def classFactory(cls):
         for meth in methods:
+            if '|' in meth:
+                meth = meth.strip('|')
+                pipe = 'p'
+            else:
+                pipe = 'n'
             CommandRegistry.commands.append(commandObject(cls.__name__,
                             meth,
-                            inspect.getargspec(getattr(cls,meth)).__repr__()))
+                            inspect.getargspec(getattr(cls,meth)).__repr__(),
+                            pipe))
         return cls
     return classFactory
