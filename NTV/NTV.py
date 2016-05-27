@@ -20,7 +20,7 @@ from threading import Lock
 import os
 import importlib
 import NTV as me
-from .utils import ifImage, myDockWidget, commandObject, CommandRegistry
+from .utils import ifImage, myDockWidget, commandObject, CommandRegistry, hasCommands
 
 
 if sys.platform == 'darwin':
@@ -82,6 +82,7 @@ from UI_DIR.NTV_UI import Ui_NTV
 #This variable is purely used for internal coding practices to force a config rewrite
 Update_config = False
 
+@hasCommands('show_array', 'get_xy')
 class NTV(QMainWindow,Ui_NTV):
     '''
     This is the main program. It implements the event loop, and handles user interaction.
@@ -473,7 +474,14 @@ class NTV(QMainWindow,Ui_NTV):
             hd = self.head
             self.head_view = header_view(hd.cards)
 
-    def rec_data(self,array):
+    def run_command(self, pipe, func, args, kwargs):
+        print('running {}'.format(func))
+        ret = func(*args, **kwargs)
+        if not pipe is 'p':
+            self.sock.send_pyobj(ret)
+        self.recive.start()
+
+    def show_array(self, array):
         '''
         This is the fucntion that is used to update the image variable of
         the class if the program is used in embeded mode, and an array is
@@ -482,6 +490,10 @@ class NTV(QMainWindow,Ui_NTV):
         image = array
         self.filelab.setText("<font color=blue>Numpy Array</font>")
         self.loadinfo(image=image)
+
+    def get_xy(self):
+        coords = self.connectclick(lambda event: (event.xdata, event.ydata))
+        return coords
 
     def getclick(self):
         '''
@@ -801,11 +813,6 @@ class NTV(QMainWindow,Ui_NTV):
             self.level_view = eval('tmp.levels(self,None)')
 
 
-    def run_command(self, func, args, kwargs):
-        ret = func(*args, **kwargs)
-        self.sock.send_pyobj(ret)
-        self.recive.start()
-
 
     def color_right_rel(self,event):
         if event.button ==3 and event.inaxes == self.colorbar.ax and int(event.ydata*10)%1 == 0:
@@ -879,11 +886,11 @@ class NTV(QMainWindow,Ui_NTV):
         '''
         Load in a file if not in embeded mode. Function updates labels accordingly
         '''
-        if path != None:
+        if path is not None:
             self.filelab.setText("<font color=blue>"+path+"</font>")
-        if image != None:
+        if image is not None:
             head = None
-        else:    
+        else:
             image, head = astroIo.getdata(path,header=True)
 
         # Catch nans and set to zero for now
@@ -910,11 +917,13 @@ class NTV(QMainWindow,Ui_NTV):
         self.head = head
         self.setup_image_info()
 
+    '''
     def renderinfo(self):
         #This signal gets emited to update a three d control window that may
         #happen to be open
         self.emit(SIGNAL('update_3d'))
         self.setup_image_info()
+    '''
 
     def setup_image_info(self):
         self.previewsize = self.previewsetting
