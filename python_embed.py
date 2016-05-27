@@ -70,7 +70,7 @@ class embed():
         self.buildFunctionList()
 
     def buildFunctionList(self):
-        request = commandObject('listener', 'None', 'None')
+        request = commandObject('listener', 'None', 'None', 'None')
         self.sock.send_pyobj([request, 'None', 'None'])
         commandFunctions = self.sock.recv_pyobj()
         for cmd in commandFunctions:
