@@ -4,6 +4,6 @@
 "module":"mask_handler",
 "url":"https://github.com/natelust/mask_handler/archive/master.zip",
 "description":"Handles masks added to the image",
-"version":0.1,
+"version":0.15,
 "ntv_version":0.4
 }
