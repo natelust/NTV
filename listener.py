@@ -27,38 +27,29 @@ class listener(QThread):
         self.parent                = parent
         self.lock                  = lock
         self.coords                = None
-        QObject.connect(self,SIGNAL('got_it'),parent.rec_data)
-        CommandRegistry.commands.append(commandObject('NTV','show_array','Arguments: array'))
-        CommandRegistry.commands.append(commandObject('NTV','get_xy','Arguments: None'))
 
     def run(self):
         while True:
             socks = dict(self.poller.poll())
             if self.sock in socks and socks[self.sock] == self.zmq.POLLIN:
                 obj,args,kwargs = self.sock.recv_pyobj()
+                print(obj)
                 try:
                     if obj.name == 'listener':
                         ret = CommandRegistry.commands
                         self.sock.send_pyobj(ret)
                     elif obj.name == 'NTV':
-                        ret = getattr(self, obj.function)(*args, **kwargs)
-                        self.sock.send_pyobj(ret)
+                        print('emitting')
+                        self.emit(SIGNAL('RUNCOMMAND'), obj.pipe, getattr(self.parent, obj.function), args, kwargs)
+                        break
+                        #self.sock.send_pyobj(ret)
                     else:
-                        makeNew = True
-                        for key in self.parent.plugins_dock_dict.keys():
-                            if self.parent.plugins_dock_dict[key].widget().__class__.__name__ == obj.name:
-                                makeNew = False
-                                break        
-                        if makeNew:
-                            self.parent.pluginQactions[obj.name].trigger()
-                            # Now find the name of the key, as it may be a ctime
-                            # Sleep to give the plugin time to be created on the other thread
-                            time.sleep(0.5)
-                            for key in self.parent.plugins_dock_dict.keys():
-                                if self.parent.plugins_dock_dict[key].widget().__class__.__name__ == obj.name:
-                                    break
-                        self.emit(SIGNAL('RUNCOMMAND'), getattr(self.parent.plugins_dock_dict[key].widget(),\
-                                      obj.function), args, kwargs)
+                        print('emitting')
+                        plug = self.findOrOpenPlugin(obj.name)
+                        print(plug)
+                        print(getattr(plug, obj.function))
+                        self.emit(SIGNAL('RUNCOMMAND'), obj.pipe, getattr(self.findOrOpenPlugin(obj.name),
+                            obj.function), args, kwargs)
                         # The thread is terminated here, and will be restarted due to some issues with
                         # Drawing cross threads, and returning asyncronously across threads
                         break
@@ -67,17 +58,20 @@ class listener(QThread):
                     self.sock.send_pyobj(ret)
             time.sleep(1)
 
-    def show_array(self,array):
-        self.emit(SIGNAL('got_it'), array)
+    def scanPlugins(self, name):
+        ident = None
+        for key in self.parent.plugins_dock_dict.keys():
+            if self.parent.plugins_dock_dict[key].widget().__class__.__name__ == name:
+                ident = key
+                break
+        return ident
 
-    def get_xy(self):
-        self.parent.connectclick(self.send_xy)
-        while True:
-            if self.coords != None:
-                coords = self.coords[:]
-                self.coords = None
-                return(coords)
-            time.sleep(0.2)
-
-    def send_xy(self,event):
-        self.coords = (event.xdata,event.ydata)
+    def findOrOpenPlugin(self, name):
+        ident = self.scanPlugins(name)
+        if ident is None:
+            self.parent.pluginQactions[name].trigger()
+            # Sleep to give plugin time to be created on other thread
+            time.sleep(0.5)
+            # Find key associated with plugin name
+            ident = self.scanPlugins(name)
+        return self.parent.plugins_dock_dict[ident].widget()
