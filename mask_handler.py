@@ -57,7 +57,6 @@ class mask_handler(QWidget):
             name = ['array'+str(i+self.numMasks) for i in loop]
 
         base = 0
-        print(name)
         for i in loop:
             color = np.uint8(self.yielder.next())
             self.maskToColor[name[i]] = color
