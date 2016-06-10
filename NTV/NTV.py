@@ -475,7 +475,6 @@ class NTV(QMainWindow,Ui_NTV):
             self.head_view = header_view(hd.cards)
 
     def run_command(self, pipe, func, args, kwargs):
-        print('running {}'.format(func))
         ret = func(*args, **kwargs)
         if not pipe is 'p':
             self.sock.send_pyobj(ret)
