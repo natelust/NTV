@@ -33,21 +33,16 @@ class listener(QThread):
             socks = dict(self.poller.poll())
             if self.sock in socks and socks[self.sock] == self.zmq.POLLIN:
                 obj,args,kwargs = self.sock.recv_pyobj()
-                print(obj)
                 try:
                     if obj.name == 'listener':
                         ret = CommandRegistry.commands
                         self.sock.send_pyobj(ret)
                     elif obj.name == 'NTV':
-                        print('emitting')
                         self.emit(SIGNAL('RUNCOMMAND'), obj.pipe, getattr(self.parent, obj.function), args, kwargs)
                         break
                         #self.sock.send_pyobj(ret)
                     else:
-                        print('emitting')
                         plug = self.findOrOpenPlugin(obj.name)
-                        print(plug)
-                        print(getattr(plug, obj.function))
                         self.emit(SIGNAL('RUNCOMMAND'), obj.pipe, getattr(self.findOrOpenPlugin(obj.name),
                             obj.function), args, kwargs)
                         # The thread is terminated here, and will be restarted due to some issues with
