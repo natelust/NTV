@@ -4,6 +4,6 @@
 "module":"listener",
 "url":"https://github.com/natelust/listener/archive/master.zip",
 "description":"This is a background plugin which facilitates NTV listening for connections from remote or local connections",
-"version":0.2,
+"version":0.25,
 "ntv_version":0.5
 }
