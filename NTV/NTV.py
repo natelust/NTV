@@ -19,9 +19,12 @@ import matplotlib as mpl
 from threading import Lock
 import os
 import importlib
+import logging
 import NTV as me
 from .utils import ifImage, myDockWidget, commandObject, CommandRegistry, hasCommands
+from .logger_widget import NTVLogger
 
+LOGLEVEL = logging.DEBUG
 
 if sys.platform == 'darwin':
     plug_loc = os.path.expanduser('~/Library/Application Support/NTV')
@@ -95,6 +98,13 @@ class NTV(QMainWindow,Ui_NTV):
         super(NTV,self).__init__(parent)
         self.setupUi(self)
         self.setDockOptions(QMainWindow.ForceTabbedDocks |QMainWindow.VerticalTabs)
+
+        # Create a logger widget to function as a log for the application
+        self.ntvLogger = NTVLogger()
+        self.ntvLogger.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+        logging.getLogger().addHandler(self.ntvLogger)
+        logging.getLogger().setLevel(LOGLEVEL)
+
         #These lines set the application data used to save the settings
         QCoreApplication.setOrganizationName('NTV_project')
         QCoreApplication.setOrganizationDomain('code.google.com/p/ntv/')
@@ -195,6 +205,7 @@ class NTV(QMainWindow,Ui_NTV):
         QObject.connect(self.actionAbout,SIGNAL('triggered()'),self.about)
         QObject.connect(self.actionQuit,SIGNAL('triggered()'),self.close)
         QObject.connect(self.actionPreferences,SIGNAL('triggered()'),self.prefer)
+        QObject.connect(self.actionLogger, SIGNAL('triggered()'), self.showLogger)
         QObject.connect(self.pushButton,SIGNAL('clicked()'),self.getclick)
         QObject.connect(self.ycheckbox,SIGNAL('toggled(bool)'),self.showy)
         QObject.connect(self.xcheckbox,SIGNAL('toggled(bool)'),self.showx)
@@ -254,6 +265,13 @@ class NTV(QMainWindow,Ui_NTV):
         except:
             self.setWindowTitle('NTV - Error with ZMQ')
 
+    def showLogger(self):
+        self.loggerDialog = QDialog()
+        loggerDialogLayout = QVBoxLayout()
+        loggerDialogLayout.addWidget(self.ntvLogger.widget)
+        self.loggerDialog.setLayout(loggerDialogLayout)
+        self.loggerDialog.show()
+
 
     def closeEvent(self,event):
         '''
@@ -292,12 +310,28 @@ class NTV(QMainWindow,Ui_NTV):
             if self.plugins_global_dict[plug]['manifest']['type'] == 'addon':
                 self.plugins_dir_list.append(plug)
         self.pluginQactions = {}
+        failures = []
         for plug in self.plugins_dir_list:
-            self.pluginQactions[plug] = self.menuPlugins.addAction(\
-                    self.plugins_global_dict[plug]['manifest']['name'].title(),\
-                    self.plugin_clicked)
-            self.pluginQactions[plug].setObjectName(plug)
-            self.plugins_module_dict[plug] = importlib.import_module('%s.%s'%(plug,plug))
+            try:
+                self.plugins_module_dict[plug] = importlib.import_module('%s.%s'%(plug,plug))
+                self.pluginQactions[plug] = self.menuPlugins.addAction(\
+                        self.plugins_global_dict[plug]['manifest']['name'].title(),\
+                        self.plugin_clicked)
+                self.pluginQactions[plug].setObjectName(plug)
+            except Exception as e:
+                # Record that a failure happened, so we can inform the user
+                failures.append(plug)
+                if plug in self.plugins_dir_list:
+                    self.plugins_dir_list.pop(self.plugins_dir_list.index(plug))
+                if plug in self.pluginQactions:
+                    del self.pluginQactions[plug]
+                logging.error("Problem with {}: {}".format(plug, e))
+        if failures:
+            msg = "The following plugins failed to import and have been"\
+                    " distabled, see the logger for more information: \n"
+            for plug in failures:
+                msg += "{}\n".format(plug)
+            QMessageBox.information(self, "Error", msg)
 
 
     def plugin_clicked(self, plugin=None, hidden=False):
@@ -414,7 +448,7 @@ class NTV(QMainWindow,Ui_NTV):
         msg = '''NTV
         This program is to help visualize astronomical data, and update
         available tools such as ATV which is an idl project. NTV is
-        designed to integrate better with python and is designed to be 
+        designed to integrate better with python and is designed to be
         easily exteded for future needs.
 
         Website:
@@ -612,7 +646,7 @@ class NTV(QMainWindow,Ui_NTV):
     @ifImage
     def mouseplace(self,event):
         '''
-        Handles the mouse motion over the imshow mpl canvas object. This function now 
+        Handles the mouse motion over the imshow mpl canvas object. This function now
         also updates the x and y views if they are visible
         need better handeling of sizes and edge handeling for x and y views
         '''
@@ -957,7 +991,7 @@ class NTV(QMainWindow,Ui_NTV):
         self.emit(SIGNAL('update_3d'))
         self.guess_white_black()
         self.drawim()
-    
+
     def drawim(self):
         '''
         This fucntion actually handles the drawing of the imshow mpl canvas.

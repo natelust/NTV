@@ -321,12 +321,15 @@ class Ui_NTV(object):
         self.actionBlink.setObjectName(_fromUtf8("actionBlink"))
         self.actionAddIm = QtGui.QAction(NTV)
         self.actionAddIm.setObjectName(_fromUtf8("actionAddIm"))
+        self.actionLogger = QtGui.QAction(NTV)
+        self.actionLogger.setObjectName(_fromUtf8("actionLogger"))
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionPreferences)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionQuit)
         self.menuHelp.addAction(self.actionAbout)
+        self.menuHelp.addAction(self.actionLogger)
         self.menuImage.addAction(self.actionHeader_2)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuImage.menuAction())
@@ -369,6 +372,7 @@ class Ui_NTV(object):
         self.actionPreferences.setText(_translate("NTV", "Preferences", None))
         self.actionBlink.setText(_translate("NTV", "Blink", None))
         self.actionAddIm.setText(_translate("NTV", "Add Image", None))
+        self.actionLogger.setText(_translate("NTV", "Runtime Log", None))
 
 from mpl_pyqt4_widget import MPL_Widget
 import icons_rc

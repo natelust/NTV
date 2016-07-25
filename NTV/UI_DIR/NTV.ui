@@ -730,6 +730,7 @@ border-color: rgb(190, 190, 190);</string>
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionLogger"/>
    </widget>
    <widget class="QMenu" name="menuImage">
     <property name="title">
@@ -795,6 +796,11 @@ border-color: rgb(190, 190, 190);</string>
   <action name="actionAddIm">
    <property name="text">
     <string>Add Image</string>
+   </property>
+  </action>
+  <action name="actionLogger">
+   <property name="text">
+    <string>Runtime Log</string>
    </property>
   </action>
  </widget>
